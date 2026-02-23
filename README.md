@@ -25,7 +25,7 @@ Connect to your Meshtastic devices over Bluetooth, USB Serial, or WiFi — no py
 git clone https://github.com/defidude/Elecstatic.git
 cd Elecstatic
 npm install
-npm run dev
+npm start
 ```
 
 You may need to allow Bluetooth access in **System Settings > Privacy & Security > Bluetooth**.
@@ -36,7 +36,7 @@ You may need to allow Bluetooth access in **System Settings > Privacy & Security
 git clone https://github.com/defidude/Elecstatic.git
 cd Elecstatic
 npm install
-npm run dev
+npm start
 ```
 
 BLE requires BlueZ installed. If Bluetooth doesn't work, try launching with `--enable-features=WebBluetooth`.
@@ -47,7 +47,7 @@ BLE requires BlueZ installed. If Bluetooth doesn't work, try launching with `--e
 git clone https://github.com/defidude/Elecstatic.git
 cd Elecstatic
 npm install
-npm run dev
+npm start
 ```
 
 Should work out of the box. If serial isn't detected, make sure you have the correct USB drivers for your device.
