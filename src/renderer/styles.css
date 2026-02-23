@@ -1,0 +1,29 @@
+@import "leaflet/dist/leaflet.css";
+@import "tailwindcss";
+
+/* Leaflet container needs explicit height */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Dark scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Font smoothing */
+* {
+  -webkit-font-smoothing: antialiased;
+}

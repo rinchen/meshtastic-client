@@ -1,0 +1,92 @@
+export type ConnectionType = "ble" | "serial" | "http";
+
+export interface MeshNode {
+  node_id: number;
+  long_name: string;
+  short_name: string;
+  hw_model: string;
+  snr: number;
+  battery: number;
+  last_heard: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface ChatMessage {
+  id?: number;
+  sender_id: number;
+  sender_name: string;
+  payload: string;
+  channel: number;
+  timestamp: number;
+  // Delivery status tracking
+  packetId?: number;
+  status?: "sending" | "acked" | "failed";
+  error?: string;
+  // Emoji reactions / tapback
+  emoji?: number;
+  replyId?: number;
+}
+
+export interface TelemetryPoint {
+  timestamp: number;
+  batteryLevel?: number;
+  voltage?: number;
+  snr?: number;
+  rssi?: number;
+}
+
+export interface DeviceState {
+  status: "disconnected" | "connecting" | "connected" | "configured";
+  myNodeNum: number;
+  connectionType: ConnectionType | null;
+}
+
+export interface BluetoothDevice {
+  deviceId: string;
+  deviceName: string;
+}
+
+export interface SerialPortInfo {
+  portId: string;
+  displayName: string;
+  portName: string;
+  vendorId?: string;
+  productId?: string;
+}
+
+// Extend the Window interface for the electron preload bridge
+declare global {
+  interface Window {
+    electronAPI: {
+      db: {
+        saveMessage: (msg: ChatMessage) => Promise<unknown>;
+        getMessages: (
+          channel?: number,
+          limit?: number
+        ) => Promise<ChatMessage[]>;
+        saveNode: (node: MeshNode) => Promise<unknown>;
+        getNodes: () => Promise<MeshNode[]>;
+        clearMessages: () => Promise<unknown>;
+        clearNodes: () => Promise<unknown>;
+        updateMessageStatus: (
+          packetId: number,
+          status: string,
+          error?: string
+        ) => Promise<unknown>;
+        exportDb: () => Promise<string | null>;
+        importDb: () => Promise<{ nodesAdded: number; messagesAdded: number } | null>;
+      };
+      onBluetoothDevicesDiscovered: (
+        cb: (devices: BluetoothDevice[]) => void
+      ) => () => void;
+      selectBluetoothDevice: (deviceId: string) => void;
+      cancelBluetoothSelection: () => void;
+      onSerialPortsDiscovered: (
+        cb: (ports: SerialPortInfo[]) => void
+      ) => () => void;
+      selectSerialPort: (portId: string) => void;
+      cancelSerialSelection: () => void;
+    };
+  }
+}

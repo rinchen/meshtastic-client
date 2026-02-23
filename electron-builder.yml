@@ -1,0 +1,32 @@
+appId: com.electastic.app
+productName: Electastic
+directories:
+  buildResources: resources
+  output: release
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - node_modules/**/*
+  - package.json
+mac:
+  category: public.app-category.utilities
+  target:
+    - dmg
+    - zip
+  icon: resources/icon.png
+  entitlements: resources/entitlements.mac.plist
+  extendInfo:
+    NSBluetoothAlwaysUsageDescription: "Electastic needs Bluetooth to communicate with Meshtastic devices."
+linux:
+  target:
+    - AppImage
+    - deb
+  category: Utility
+  icon: resources/icon.png
+win:
+  target:
+    - nsis
+  icon: resources/icon.png
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

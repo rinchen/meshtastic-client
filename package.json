@@ -1,0 +1,63 @@
+{
+  "name": "electastic",
+  "version": "1.0.0",
+  "description": "Cross-platform Meshtastic desktop client — BLE, Serial, and HTTP support",
+  "main": "dist-electron/main/index.js",
+  "scripts": {
+    "build:main": "esbuild src/main/index.ts --bundle --platform=node --outfile=dist-electron/main/index.js --external:electron --external:better-sqlite3 --format=cjs",
+    "build:preload": "esbuild src/preload/index.ts --bundle --platform=node --outfile=dist-electron/preload/index.js --external:electron --format=cjs",
+    "build:renderer": "vite build",
+    "build": "npm run build:main && npm run build:preload && npm run build:renderer",
+    "dev": "concurrently \"npm run build:main -- --watch\" \"npm run build:preload -- --watch\" \"vite\" \"wait-on http://localhost:5173 && VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "start": "npm run build && electron .",
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:win": "npm run build && electron-builder --win"
+  },
+  "author": "Electastic Contributors",
+  "license": "MIT",
+  "keywords": [
+    "meshtastic",
+    "mesh-network",
+    "bluetooth",
+    "electron",
+    "desktop"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/defidude/Elecstatic"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/leaflet": "^1.9.21",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.4",
+    "concurrently": "^9.2.1",
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1",
+    "electron-rebuild": "^3.2.9",
+    "esbuild": "^0.25.12",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "wait-on": "^9.0.4"
+  },
+  "dependencies": {
+    "@meshtastic/core": "npm:@jsr/meshtastic__core@^2.6.6",
+    "@meshtastic/protobufs": "npm:@jsr/meshtastic__protobufs@^2.7.18",
+    "@meshtastic/transport-http": "npm:@jsr/meshtastic__transport-http@^0.2.1",
+    "@meshtastic/transport-web-bluetooth": "npm:@jsr/meshtastic__transport-web-bluetooth@^0.1.2",
+    "@meshtastic/transport-web-serial": "npm:@jsr/meshtastic__transport-web-serial@^0.2.5",
+    "better-sqlite3": "^12.6.2",
+    "leaflet": "^1.9.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^3.7.0"
+  }
+}
