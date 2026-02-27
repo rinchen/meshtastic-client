@@ -121,7 +121,8 @@ export function useDevice() {
 
   const stopPolling = useCallback(() => {
     if (pollRef.current) {
-      clearInterval(poll链
+      clearInterval(pollRef.current);
+      pollRef.current = null;
     }
   }, []);
 
@@ -597,7 +598,7 @@ export function useDevice() {
     cleanupSubscriptions();
     stopPolling();
     stopWatchdog();
-    stopBleHeart点
+    stopBleHeartbeat();
     const oldDevice = deviceRef.current;
     deviceRef.current = null;
     if (oldDevice) safeDisconnect(oldDevice).catch(() => {});
@@ -767,9 +768,9 @@ export function useDevice() {
 
   const sendStatusEvents = useCallback(() => {
     if (state.status === 'connected') {
-      window.ipcRenderer.send('device-connected');
+      window.electronAPI.notifyDeviceConnected();
     } else if (state.status === 'disconnected') {
-      window.ipcRenderer.send('device-disconnected');
+      window.electronAPI.notifyDeviceDisconnected();
     }
   }, [state.status]);
 

@@ -163,7 +163,9 @@ function createWindow() {
   mainWindow.on('close', (event) => {
     if (isConnected) {
       event.preventDefault(); // Prevent window from closing
-      mainWindow.minimize();   // Minimize instead
+      mainWindow.hide();       // Hide while connection is active
+    } else {
+      app.quit();              // Truly quit when no connection
     }
   });
 }
@@ -353,6 +355,8 @@ app.whenReady().then(() => {
       } catch (error) {
         console.error("Window creation error:", error);
       }
+    } else {
+      mainWindow?.show(); // Restore hidden window on dock click
     }
   });
 });
