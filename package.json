@@ -48,14 +48,7 @@
     "wait-on": "^9.0.4"
   },
   "overrides": {
-    "@electron/universal": {
-      "minimatch": "10.2.2"
-    },
-    "cacache": {
-      "glob": {
-        "minimatch": "10.2.2"
-      }
-    }
+    "minimatch": "10.2.4"
   },
   "dependencies": {
     "@meshtastic/core": "npm:@jsr/meshtastic__core@^2.6.6",
