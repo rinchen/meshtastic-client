@@ -1,4 +1,4 @@
-# Electastic
+# Denver Mesh
 
 A cross-platform Meshtastic desktop client for **Mac**, **Linux**, and **Windows**.
 
@@ -34,7 +34,7 @@ npm start
 
 > **Note:** `npm install` automatically compiles the native SQLite module for Electron via `electron-rebuild`. If it fails, make sure Xcode Command Line Tools are installed.
 
-On first Bluetooth connection, macOS will show a system popup requesting Bluetooth permission — you must accept. If you accidentally denied it, go to **System Settings > Privacy & Security > Bluetooth** and toggle Electastic on.
+On first Bluetooth connection, macOS will show a system popup requesting Bluetooth permission — you must accept. If you accidentally denied it, go to **System Settings > Privacy & Security > Bluetooth** and toggle Denver Mesh on.
 
 ### Linux
 
@@ -69,7 +69,7 @@ Should work out of the box. If serial isn't detected, make sure you have the cor
 
 1. **Power on** your Meshtastic device
 2. **Put it in Bluetooth pairing mode** (if connecting via BLE)
-3. Open Electastic and go to the **Connection** tab
+3. Open **Denver Mesh** and go to the **Connection** tab
 4. Select your connection type (Bluetooth / USB Serial / WiFi)
 5. Click **Connect** and select your device from the picker
 6. Wait for status to show **Configured** — you're connected!
@@ -102,6 +102,9 @@ The distributable is output to the `release/` directory.
 - **Telemetry** — battery voltage and signal quality charts
 - **Radio Config** — region, modem preset, device role, GPS, power, Bluetooth, display settings
 - **Admin** — reboot, shutdown, factory reset, trace route, node removal, DB export/import/clear
+- **Direct Messaging** — send private messages to individual nodes; DM tabs persist across sessions
+- **Auto-reconnect** — connection watchdog detects stale/dropped connections and automatically reconnects with exponential backoff (up to 5 attempts)
+- **Minimize on connect** — app minimizes to taskbar when a Bluetooth connection is established; exits cleanly on disconnect
 - **Persistent Storage** — messages and nodes saved locally via SQLite
 - **Dark UI** — custom scrollbar, tab icons, polished chat bubbles
 
@@ -174,8 +177,9 @@ You're missing build tools for compiling the native SQLite module:
 
 ### App shows "disconnected" but device is still on
 
-- The Bluetooth connection can drop silently. Click Disconnect, then Connect again
-- For serial: the USB cable may have been bumped — reconnect
+- The app automatically detects stale connections and reconnects. If the banner shows "reconnecting…", wait for it to finish (up to 5 attempts with exponential backoff)
+- If auto-reconnect fails, click the **Reconnect** button in the banner, or go to the Connection tab and reconnect manually
+- For serial: the USB cable may have been bumped — reconnect manually
 
 ---
 
