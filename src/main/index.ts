@@ -38,7 +38,7 @@ function createWindow() {
     height: 800,
     minWidth: 900,
     minHeight: 600,
-    title: "Electastic",
+    title: "Meshtastic Client",
     // In packaged mode, electron-builder sets the app icon via mac.icon config.
     // Only set the icon manually during development.
     icon: app.isPackaged ? undefined : path.join(__dirname, "../../resources/icon.png"),
